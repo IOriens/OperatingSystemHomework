@@ -1,2 +1,2 @@
-#This is a repo for my Operating System Homework
+#This is a repo of my Operating System Homework.
 ##The main language used is c.
