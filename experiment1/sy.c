@@ -92,9 +92,8 @@ int main(){
 		}else{
 			pid4=fork();
 			if(pid4==0){
-				printf("CHILD-5:%d\n",getpid());
-				// execvp("./home/oriens/Documents/Operation SYS HW/experiment1/hello",NULL);
-				execvp("./hello",NULL);
+				printf("CHILD-5:%d\n",getpid());				
+				execlp("/home/oriens/Documents/Operation SYS HW/experiment1/hello","./hello",NULL);				
 			}else{
 				wait(NULL);
 			}
