@@ -87,13 +87,14 @@ int main(){
 		pid3=fork();
 		if(pid3==0){
 			printf("CHILD-4:%d\n",getpid());
-			
-
-			
+			printf("File are listed bellow:\n");
+			execl("/bin/ls","ls",NULL);
 		}else{
 			pid4=fork();
 			if(pid4==0){
 				printf("CHILD-5:%d\n",getpid());
+				// execvp("./home/oriens/Documents/Operation SYS HW/experiment1/hello",NULL);
+				execvp("./hello",NULL);
 			}else{
 				wait(NULL);
 			}
