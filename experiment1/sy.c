@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -15,7 +16,6 @@ void *fib(void *argv){
 		for(i=2;i<=n;i++){
 			arr[i]=arr[i-1]+arr[i-2];
 		}
-		// printf("The result is:%d\n",arr[n]);
 		for(i=0;i<=n;i++){
 			printf("		%d \n",arr[i]);
 		}
@@ -58,7 +58,7 @@ int main(){
 	pid_t pid2;
 	pid_t pid3;
 	pid_t pid4;
-	printf("FATHER-1:%d\n",getpid());
+	printf("=======FATHER-1|PPID:%d|PID%d\n",getppid(),getpid());
 
 	  //prepare for thread creation
 	pthread_t tid1;
@@ -69,8 +69,8 @@ int main(){
 	//fork()
 	pid1=fork();
 	if(pid1==0){
-		printf("CHILD-2:%d\n",getpid());
-		int n=20;
+		printf("=======CHILD-1|PPID:%d|PID%d\n",getppid(),getpid());
+		int n=10;
 		pthread_create(&tid1,&attr,fib,&n);
 		pthread_create(&tid2,&attr,primeNumbers,&n);
 		pthread_join(tid1,NULL);
@@ -83,28 +83,29 @@ int main(){
 	}
 
 	if(pid2==0){
-		printf("CHILD-3:%d\n",getpid());
+		printf("=======CHILD-2|PPID:%d|PID%d\n",getppid(),getpid());
 		pid3=fork();
 		if(pid3==0){
-			printf("CHILD-4:%d\n",getpid());
+			printf("=======CHILD-3|PPID:%d|PID%d\n",getppid(),getpid());
 			printf("File are listed bellow:\n");
 			execl("/bin/ls","ls",NULL);
+			// execl("/bin/ps","ps",NULL);
+			// execl("/bin/cp","cp","hello.c","hello2.c",NULL);
+			exit(0);
 		}else{
 			pid4=fork();
 			if(pid4==0){
-				printf("CHILD-5:%d\n",getpid());				
+				printf("=======CHILD-4|PPID:%d|PID%d\n",getppid(),getpid());							
 				execlp("/home/oriens/Documents/Operation SYS HW/experiment1/hello","./hello",NULL);				
+				exit(0);
 			}else{
 				wait(NULL);
 			}
+			wait(NULL);
 		}
 		exit(0);
 	}else{
 		wait(NULL);
 	}
-
-
-
-
 	return 0;
 }
