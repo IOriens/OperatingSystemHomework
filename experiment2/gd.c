@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <sys/types.h>
 
@@ -19,8 +20,8 @@ int main(){
 	if(childpid1==0){
 		close(r_fd);
 		FILE *fp;
-		fp=fopen("123.txt","w");
-		fprintf(fp,"Text in 123.txt");
+		fp=fopen("123.txt","w");	
+		fprintf(fp,"Shall I compare thee to a summer's day?\nThou art more lovely and more temperate.");
 		fclose(fp);
 		write(w_fd,string,strlen(string));		
 		exit(0);
