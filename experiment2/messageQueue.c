@@ -1,8 +1,11 @@
-#include <stdio.h>
 #include <sys/msg.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <sys/types.h>
 #define MAX 100
 
 struct msgbuff
@@ -40,7 +43,7 @@ int main(){
 		}else{
 			FILE *fp;
 			fp=fopen("123.txt","w");
-			fprintf(fp,"Text in 123.txt");
+			fprintf(fp,"Shall I compare thee to a summer's day?\nThou art more lovely and more temperate.\n");
 			fclose(fp);
 			exit(0);
 		}
