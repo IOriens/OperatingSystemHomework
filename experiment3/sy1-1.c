@@ -19,20 +19,23 @@ int total=0;
 
 void* child(void* vargp){
 	int i = *(int*)vargp;
-	// if(i==1){
-	// 	sleep(1);
-	// }
+	
 	// printf("%d============child\n",i);
+	
+	pthread_mutex_lock(&s[i]);
+	pthread_mutex_lock(&cpu);	
+	if(i==1){
+		sleep(1);
+	}
 	while(thread[i].remain>0){
-		pthread_mutex_lock(&s[i]);
-		pthread_mutex_lock(&cpu);	
 		printf("ThreadId is:%d Round:%d Remain:%d\n",thread[i].num,total,thread[i].remain);
 		total++;
 		thread[i].remain--;		
-		pthread_mutex_unlock(&cpu);
-		pthread_mutex_unlock(&s[i]);
-		sleep(1);
-	}
+	}	
+	pthread_mutex_unlock(&cpu);
+	pthread_mutex_unlock(&s[i]);
+
+	
 	
 }
 
@@ -73,9 +76,11 @@ void* father(void* vargp){
 
 int main(){
 	int i=0,j=0;
+	
 	for(j=0;j<N;j++){
 		s[j]=cpu;
 	}
+
 	pthread_create(&fid[i],NULL,father,(void*)(&i));
 	pthread_join(fid[i],NULL);
 
